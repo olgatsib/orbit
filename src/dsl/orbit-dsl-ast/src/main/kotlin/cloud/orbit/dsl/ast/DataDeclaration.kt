@@ -9,4 +9,6 @@ package cloud.orbit.dsl.ast
 data class DataDeclaration(
     override val name: String,
     val fields: List<DataField> = emptyList()
-) : AstNode(), Declaration
+) : AstNode<DataDeclaration>(), Declaration {
+    override fun clone() = copy()
+}

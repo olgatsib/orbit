@@ -13,7 +13,6 @@ import cloud.orbit.dsl.ast.ActorDeclaration
 import cloud.orbit.dsl.ast.ActorKeyType
 import cloud.orbit.dsl.ast.ActorMethod
 import cloud.orbit.dsl.ast.MethodParameter
-import cloud.orbit.dsl.ast.annotated
 
 class ActorDeclarationVisitor(
     private val methodReturnTypeVisitor: TypeVisitor,

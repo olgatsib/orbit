@@ -10,7 +10,6 @@ import cloud.orbit.dsl.OrbitDslBaseVisitor
 import cloud.orbit.dsl.OrbitDslParser
 import cloud.orbit.dsl.ast.DataDeclaration
 import cloud.orbit.dsl.ast.DataField
-import cloud.orbit.dsl.ast.annotated
 
 class DataDeclarationVisitor(
     private val dataFieldTypeVisitor: TypeVisitor,

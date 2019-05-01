@@ -8,7 +8,6 @@ package cloud.orbit.dsl
 
 import cloud.orbit.dsl.ast.ParseContext
 import cloud.orbit.dsl.ast.Type
-import cloud.orbit.dsl.ast.annotated
 import cloud.orbit.dsl.error.OrbitDslError
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

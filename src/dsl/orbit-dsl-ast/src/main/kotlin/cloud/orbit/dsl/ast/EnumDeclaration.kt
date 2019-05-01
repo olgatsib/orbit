@@ -9,4 +9,6 @@ package cloud.orbit.dsl.ast
 data class EnumDeclaration(
     override val name: String,
     val members: List<EnumMember> = emptyList()
-) : AstNode(), Declaration
+) : AstNode<EnumDeclaration>(), Declaration {
+    override fun clone() = copy()
+}

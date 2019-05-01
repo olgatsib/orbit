@@ -6,11 +6,13 @@
 
 package cloud.orbit.dsl.ast
 
-abstract class AstNode {
-    private val annotations = mutableMapOf<Class<*>, AstAnnotation>()
+abstract class AstNode<T : AstNode<T>> {
+    private var annotations = emptyMap<Class<*>, AstAnnotation>()
 
-    fun annotate(annotation: AstAnnotation) {
-        this.annotations[annotation.javaClass] = annotation
+    abstract fun clone(): T
+
+    fun annotated(annotation: AstAnnotation): T = clone().also {
+        it.annotations = annotations + (annotation.javaClass to annotation)
     }
 
     inline fun <reified T : AstAnnotation> getAnnotation(): T? = getAnnotation(T::class.java)
@@ -18,9 +20,3 @@ abstract class AstNode {
     @Suppress("UNCHECKED_CAST")
     fun <T : AstAnnotation> getAnnotation(type: Class<T>): T? = annotations[type] as T?
 }
-
-inline fun <reified T : AstNode> T.annotated(annotation: AstAnnotation) =
-    this.also {
-        this.annotate(annotation)
-    }
-

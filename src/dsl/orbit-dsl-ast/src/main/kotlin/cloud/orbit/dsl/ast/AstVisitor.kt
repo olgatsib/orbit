@@ -15,7 +15,7 @@ abstract class AstVisitor {
         cu.actors.forEach { visitNode(it) }
     }
 
-    open fun visitNode(node: AstNode) {
+    open fun visitNode(node: AstNode<*>) {
         when (node) {
             is Declaration -> visitDeclaration(node)
             is EnumMember -> visitEnumMember(node)
@@ -74,7 +74,7 @@ abstract class AstVisitor {
         errorListeners.remove(errorListener)
     }
 
-    fun reportError(node: AstNode, message: String) {
+    fun reportError(node: AstNode<*>, message: String) {
         errorListeners.forEach {
             it.onError(node, message)
         }

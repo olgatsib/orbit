@@ -7,5 +7,5 @@
 package cloud.orbit.dsl.ast
 
 interface ErrorListener {
-    fun onError(astNode: AstNode, message: String)
+    fun onError(astNode: AstNode<*>, message: String)
 }

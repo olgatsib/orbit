@@ -30,7 +30,7 @@ class TypeCheckingVisitor(private val typeChecks: Collection<TypeCheck>) : AstVi
         super.visitType(type)
     }
 
-    override fun onError(astNode: AstNode, message: String) {
+    override fun onError(astNode: AstNode<*>, message: String) {
         reportError(astNode, message)
     }
 }

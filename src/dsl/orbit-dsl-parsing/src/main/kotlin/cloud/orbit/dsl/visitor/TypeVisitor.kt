@@ -10,7 +10,6 @@ import cloud.orbit.dsl.OrbitDslBaseVisitor
 import cloud.orbit.dsl.OrbitDslParser
 import cloud.orbit.dsl.ast.Type
 import cloud.orbit.dsl.ast.TypeOccurrenceContext
-import cloud.orbit.dsl.ast.annotated
 
 class TypeVisitor(
     private val typeOccurrenceContext: TypeOccurrenceContext,

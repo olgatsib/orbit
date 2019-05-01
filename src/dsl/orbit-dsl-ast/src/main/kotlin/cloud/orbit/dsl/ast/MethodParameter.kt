@@ -9,4 +9,6 @@ package cloud.orbit.dsl.ast
 data class MethodParameter(
     val name: String,
     val type: Type
-) : AstNode()
+) : AstNode<MethodParameter>() {
+    override fun clone() = copy()
+}

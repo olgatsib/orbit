@@ -14,7 +14,7 @@ import cloud.orbit.dsl.error.OrbitDslError
 class TypeErrorListener : ErrorListener {
     val typeErrors = mutableListOf<OrbitDslError>()
 
-    override fun onError(astNode: AstNode, message: String) {
+    override fun onError(astNode: AstNode<*>, message: String) {
         val parseContext = astNode.getAnnotation() ?: ParseContext.UNKNOWN
         typeErrors.add(
             OrbitDslError(

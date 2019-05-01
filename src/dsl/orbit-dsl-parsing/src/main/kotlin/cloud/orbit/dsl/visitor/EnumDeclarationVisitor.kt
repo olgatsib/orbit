@@ -10,7 +10,6 @@ import cloud.orbit.dsl.OrbitDslBaseVisitor
 import cloud.orbit.dsl.OrbitDslParser
 import cloud.orbit.dsl.ast.EnumDeclaration
 import cloud.orbit.dsl.ast.EnumMember
-import cloud.orbit.dsl.ast.annotated
 
 class EnumDeclarationVisitor(
     private val parseContextProvider: ParseContextProvider

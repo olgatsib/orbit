@@ -11,30 +11,29 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class AstNodeTest {
-    private class TestAnnotation : AstAnnotation
-    private class AnotherTestAnnotation : AstAnnotation
-
     @Test
-    fun astNodeCanBeAnnotated() {
-        val astNode = object : AstNode() {}
+    fun annotatedAstNodeIsNewInstance() {
+        val astNode = TestNode()
         val annotation = TestAnnotation()
 
-        astNode.annotate(annotation)
+        val annotatedAstNode = astNode.annotated(annotation)
 
-        Assertions.assertSame(annotation, astNode.getAnnotation<TestAnnotation>())
-        Assertions.assertSame(annotation, astNode.getAnnotation(TestAnnotation::class.java))
+        Assertions.assertNotSame(astNode, annotatedAstNode)
+        Assertions.assertNull(astNode.getAnnotation<TestAnnotation>())
+        Assertions.assertNull(astNode.getAnnotation(TestAnnotation::class.java))
+        Assertions.assertSame(annotation, annotatedAstNode.getAnnotation<TestAnnotation>())
+        Assertions.assertSame(annotation, annotatedAstNode.getAnnotation(TestAnnotation::class.java))
     }
 
     @Test
     fun supportsSingleAnnotationPerType() {
-        val astNode = object : AstNode() {}
         val annotation1 = TestAnnotation()
         val annotation2 = TestAnnotation()
         val annotation3 = AnotherTestAnnotation()
-
-        astNode.annotate(annotation1)
-        astNode.annotate(annotation2)
-        astNode.annotate(annotation3)
+        val astNode = TestNode()
+            .annotated(annotation1)
+            .annotated(annotation2)
+            .annotated(annotation3)
 
         Assertions.assertSame(annotation2, astNode.getAnnotation<TestAnnotation>())
         Assertions.assertSame(annotation3, astNode.getAnnotation<AnotherTestAnnotation>())
@@ -42,20 +41,9 @@ class AstNodeTest {
 
     @Test
     fun getAnnotationReturnsNullWhenAstNodeNotAnnotatedWithType() {
-        val astNode = object : AstNode() {}
+        val astNode = TestNode()
 
         Assertions.assertNull(astNode.getAnnotation<TestAnnotation>())
-    }
-
-    @Test
-    fun annotatedReturnsSameNodeWithAnnotation() {
-        val astNode = object : AstNode() {}
-        val annotation = TestAnnotation()
-
-        val returnedNode = astNode.annotated(annotation)
-
-        Assertions.assertSame(astNode, returnedNode)
-        Assertions.assertSame(annotation, astNode.getAnnotation<TestAnnotation>())
     }
 
     @Test
@@ -100,17 +88,25 @@ class AstNodeTest {
         assertEquals(1, errorListener.errorCount)
     }
 
+    private data class TestNode(val name: String = "") : AstNode<TestNode>() {
+        override fun clone() = copy()
+    }
+
+    private class TestAnnotation : AstAnnotation
+
+    private class AnotherTestAnnotation : AstAnnotation
+
     private class TestErrorListener : ErrorListener {
         var errorCount = 0
 
-        override fun onError(astNode: AstNode, message: String) {
+        override fun onError(astNode: AstNode<*>, message: String) {
             ++errorCount
         }
     }
 
     private class ErrorReportingVisitor : AstVisitor() {
         override fun visitCompilationUnit(cu: CompilationUnit) {
-            reportError(object : AstNode() {}, "")
+            reportError(TestNode(), "")
         }
     }
 }
